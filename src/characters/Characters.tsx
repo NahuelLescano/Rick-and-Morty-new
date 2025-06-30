@@ -5,7 +5,7 @@ export const Characters = (
     { characters }: { characters: Character[] }
 ) => {
     return (
-        <main className="grid grid-cols-3 gap-4 z-2 max-w-7xl mx-auto m-0 mt-10">
+        <main className="grid grid-cols-3 gap-4 z-2 max-w-7xl mx-auto m-0 mt-10 text-lg">
             {
                 characters.map((char) => (
                     <CharacterItem
