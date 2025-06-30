@@ -5,7 +5,7 @@ export const CharacterItem = (
 ) => {
 
     return (
-        <section>
+        <section className="mt-8">
             <h2>Name: {name}</h2>
             <img src={image} alt={`${name}'s image`} />
             <h2>Status: {status}</h2>
