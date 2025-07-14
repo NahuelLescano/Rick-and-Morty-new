@@ -1,13 +1,11 @@
+import GithubIcon from "@/assets/GithubIcon.svg?react";
+import XIcon from "@/assets/XIcon.svg?react";
+
 export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-200 py-6 mt-8">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
         <div className="flex items-center gap-2">
-        { /* <img
-            src="/assets/logo.png"
-            alt="Logo"
-            className="w-10 h-10 rounded-full shadow"
-          /> */ }
           <span className="font-bold text-lg tracking-wide">Rick & Morty App</span>
         </div>
         <div className="text-sm text-gray-400">
@@ -15,20 +13,20 @@ export const Footer = () => {
         </div>
         <div className="flex gap-4">
           <a
-            href="https://github.com/tuusuario"
+            href="https://github.com/NahuelLescano/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-400 transition-colors"
           >
-            GitHub
+            <GithubIcon className="size-6" />
           </a>
           <a
-            href="https://twitter.com/tuusuario"
+            href="https://x.com/nahuel0495"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-400 transition-colors"
           >
-            Twitter
+            <XIcon className="size-6" />
           </a>
         </div>
       </div>
