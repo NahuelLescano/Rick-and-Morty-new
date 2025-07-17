@@ -2,7 +2,7 @@ import profile from "@/assets/about-profile.jpg";
 
 export const About = () => {
     return (
-        <div className="container mx-auto mt-6 px-4 py-8 text-center">
+        <div className="container mx-auto mt-10 px-4 py-8 text-center">
             <h1 className="text-3xl font-bold mb-4">About This Project</h1>
             <p className="text-white mb-4">
                 This is a fan project dedicated to the popular animated series "Rick and Morty". 
