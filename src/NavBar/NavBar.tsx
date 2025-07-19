@@ -4,7 +4,8 @@ export const NavBar = () => {
             <ul className="flex gap-8">
                 <li><a href="/">Rick and Morty</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="/favorites">Favorites</a></li>
+                { /* <li><a href="/favorites">Favorites</a></li> */ }
+                <h2>Favorites</h2>
             </ul>
         </nav>
     )
