@@ -1,12 +1,12 @@
 import type { Character, RickAndMortyApiResponse } from "@/types";
 import { create } from "zustand";
-
-const URL = "https://rickandmortyapi.com/api/character";
+import { config } from "@/config";
 
 interface CharacterStore {
     allCharacters: Character[];
     setAllCharacters: () => Promise<void>;
     getCharacterById: (id: number) => Character | undefined;
+    searchCharacters: (query: string) => Character[] | undefined;
 }
 
 const parsedCharacters = (data: RickAndMortyApiResponse ) => {
@@ -34,7 +34,7 @@ const parsedCharacters = (data: RickAndMortyApiResponse ) => {
 export const useCharacterStore = create<CharacterStore>((set, get) => ({
     allCharacters: [],
     setAllCharacters: async () => {
-        const response = await fetch(URL);
+        const response = await fetch(config.API_URL);
         if (!response.ok) {
             throw new Error(`Could not fetch characters. Status: ${response.status}`);
         }
@@ -45,5 +45,13 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
     },
     getCharacterById: (id: number) => {
         return get().allCharacters.find(character => character.id === id);
+    },
+    searchCharacters: (query: string) => {
+        if (!query) return undefined;
+
+        const lowerCaseQuery = query.toLowerCase();
+        return get().allCharacters.filter(character =>
+            character.name.toLowerCase().includes(lowerCaseQuery)
+        );
     }
 }));
