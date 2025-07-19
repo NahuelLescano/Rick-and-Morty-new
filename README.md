@@ -10,13 +10,13 @@
 El proyecto usa Zustand para el manejo del estado global, y React Router para la navegación entre páginas.
 
 La idea es usar screaming architecture: 
-    - [Gentleman Programming]("https://www.youtube.com/watch?v=lHwYP5UsgoQ")
-    - [Uncle Bob]("https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html")
+    - [Gentleman Programming](https://www.youtube.com/watch?v=lHwYP5UsgoQ)
+    - [Uncle Bob](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html)
 
 ## Animaciones:
 
 En vez de crear las mias, puedo usar:
-   - [midudev tailwind animations]("https://tailwindcss-animations.vercel.app/")
+   - [midudev tailwind animations](https://tailwindcss-animations.vercel.app/)
 
 ## Deploy:
 
