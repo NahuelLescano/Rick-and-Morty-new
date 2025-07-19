@@ -31,7 +31,7 @@ rick-and-morty/
 │   │   └── MISFITS.woff2
 │   └── vite.svg
 ├── src/
-│   ├── about/
+│   ├── About/
 │   │   └── About.tsx                    # Página sobre el proyecto
 │   ├── assets/
 │   │   ├── about-profile.jpg
