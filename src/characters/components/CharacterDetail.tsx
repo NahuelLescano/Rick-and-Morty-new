@@ -22,7 +22,7 @@ export const CharacterDetail = () => {
     }
 
     return (
-        <div className="flex justify-center align-center min-h-screen text-white p-8">
+        <div className="flex justify-center align-center text-white p-8">
             <div className="max-w-4xl mt-12 mx-auto bg-transparent backdrop-blur-md rounded-lg shadow-lg p-6">
                 <img
                     src={character.image}
