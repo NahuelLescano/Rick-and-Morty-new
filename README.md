@@ -29,6 +29,8 @@ rick-and-morty/
 ├── public/
 │   ├── font/
 │   │   └── MISFITS.woff2
+│   ├── images/
+│   │   └── background.webp
 │   └── vite.svg
 ├── src/
 │   ├── About/
