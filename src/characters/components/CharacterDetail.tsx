@@ -1,18 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useCharacterStore } from "@/store/CharacterStore";
+import { useCharacterStore } from "@/store";
 
 export const CharacterDetail = () => {
-    const params = useParams();
-    const id: number | null = params.id ? parseInt(params.id) : null;
-    if (id === null || isNaN(id)) {
-        return (
-            <div className="min-h-screen flex items-center justify-center text-white">
-                <h1 className="text-3xl font-bold">Unknown id</h1>
-            </div>
-        );
-    }
+    const { id } = useParams();
 
-    const character = useCharacterStore((state) => state.getCharacterById(id));
+    const character = useCharacterStore((state) => state.getCharacterById(parseInt(id!)));
     if (!character) {
         return (
             <div className="min-h-screen flex items-center justify-center text-white">
