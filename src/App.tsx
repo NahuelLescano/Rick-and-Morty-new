@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { NavBar } from "@/NavBar/NavBar";
-import { Footer } from "@/Footer/Footer";
+import { NavBar } from "@/NavBar";
+import { Footer } from "@/Footer";
 import "./App.css";
 
 export const App = ({ children }: { children: ReactNode }) => {
