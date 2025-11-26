@@ -1,7 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import { RoutesNotFound } from "@/RoutesNotFound";
 import { Characters, CharacterDetail } from "@/characters";
-import { About } from "@/About";
+import { About } from "@/Globals";
 
 export const AppRouter = () => {
 	return (
