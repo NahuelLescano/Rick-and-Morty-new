@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCharacterStore } from "@/store";
 import { IoIosArrowBack } from "react-icons/io";
@@ -10,13 +11,21 @@ export const CharacterDetail = () => {
         navigate(-1);
     };
 
+    const fetchById = useCharacterStore((state) => state.fetchCharacterById);
 	const character = useCharacterStore((state) =>
-		state.getCharacterById(parseInt(id!)),
+		state.selectCharacterById(Number(id)),
 	);
+
+    useEffect(() => {
+        if (id) {
+            fetchById(Number(id));
+        }
+    }, [id, fetchById]);
+
 	if (!character) {
 		return (
 			<div className="min-h-screen flex items-center justify-center text-white">
-				<h1 className="text-3xl font-bold">Character not found</h1>
+				<h1 className="text-3xl font-bold">Loading...</h1>
 			</div>
 		);
 	}
@@ -31,8 +40,8 @@ export const CharacterDetail = () => {
 						className="size-96 object-fill rounded-lg mb-4"
 					/>
 					<button
-                        className="cursor-pointer hover:scale-110 transition-all"
-                        onClick={handleBackClick}>
+						className="cursor-pointer hover:opacity-50 focus:border-white foucs:opacity-50 transition-all"
+						onClick={handleBackClick}>
 						<IoIosArrowBack
 							size={35}
 							className="absolute top-5 left-5 z-10 text-gray-500"
@@ -47,7 +56,7 @@ export const CharacterDetail = () => {
 					<strong>Species:</strong> {character.species}
 				</p>
 				<p className="text-lg mb-2">
-					<strong>Type:</strong> {character.type || "N/A"}
+					<strong>Type:</strong> {character.type}
 				</p>
 				<p className="text-lg mb-2">
 					<strong>Gender:</strong> {character.gender}
@@ -62,3 +71,4 @@ export const CharacterDetail = () => {
 		</section>
 	);
 };
+

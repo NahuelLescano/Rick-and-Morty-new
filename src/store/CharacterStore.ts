@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import type { Character, RickAndMortyApiResponse } from "@/types";
-import { getCharacters } from "@/services/api";
+import { getCharacters, getCharacterById as apiGetCharacterById } from "@/services/api";
 
 interface CharacterStore {
     allCharacters: Character[];
     setAllCharacters: () => Promise<void>;
-    getCharacterById: (id: number) => Character | undefined;
+    fetchCharacterById: (id: number) => Promise<void>;
+    selectCharacterById: (id: number) => Character | undefined;
     searchCharacters: (query: string) => Character[] | undefined;
 }
 
@@ -40,7 +41,15 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
         const parsedData = parsedCharacters(data);
         set({ allCharacters: parsedData });
     },
-    getCharacterById: (id: number) => {
+    fetchCharacterById: async (id: number) => {
+        const { call } = apiGetCharacterById(id);
+        const { data } = await call; // data: Character
+        set((state) => {
+            const exists = state.allCharacters.some((c) => c.id === data.id);
+            return { allCharacters: exists ? state.allCharacters : [...state.allCharacters, data] };
+        });
+    },
+    selectCharacterById: (id: number) => {
         return get().allCharacters.find((character) => character.id === id);
     },
     searchCharacters: (query: string) => {
