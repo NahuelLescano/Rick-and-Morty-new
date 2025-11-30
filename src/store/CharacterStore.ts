@@ -1,6 +1,6 @@
-import type { Character, RickAndMortyApiResponse } from "@/types";
 import { create } from "zustand";
-import { config } from "@/config";
+import type { Character, RickAndMortyApiResponse } from "@/types";
+import { getCharacters } from "@/services/api";
 
 interface CharacterStore {
     allCharacters: Character[];
@@ -9,7 +9,7 @@ interface CharacterStore {
     searchCharacters: (query: string) => Character[] | undefined;
 }
 
-const parsedCharacters = (data: RickAndMortyApiResponse ) => {
+const parsedCharacters = (data: RickAndMortyApiResponse): Character[] => {
     const parsedCharacters: Character[] = data.results.map((char) => ({
         id: char.id,
         name: char.name,
@@ -19,39 +19,36 @@ const parsedCharacters = (data: RickAndMortyApiResponse ) => {
         gender: char.gender,
         origin: {
             name: char.origin.name,
-            url: char.origin.url
+            url: char.origin.url,
         },
         location: {
             name: char.location.name,
-            url: char.location.url
+            url: char.location.url,
         },
-        image: char.image
+        image: char.image,
     }));
 
     return parsedCharacters;
-}
+};
 
 export const useCharacterStore = create<CharacterStore>((set, get) => ({
     allCharacters: [],
     setAllCharacters: async () => {
-        const response = await fetch(config.API_URL);
-        if (!response.ok) {
-            throw new Error(`Could not fetch characters. Status: ${response.status}`);
-        }
+        const { call } = getCharacters();
+        const { data } = await call;
 
-        const data: RickAndMortyApiResponse = await response.json();
         const parsedData = parsedCharacters(data);
         set({ allCharacters: parsedData });
     },
     getCharacterById: (id: number) => {
-        return get().allCharacters.find(character => character.id === id);
+        return get().allCharacters.find((character) => character.id === id);
     },
     searchCharacters: (query: string) => {
         if (!query) return undefined;
 
         const lowerCaseQuery = query.toLowerCase();
-        return get().allCharacters.filter(character =>
-            character.name.toLowerCase().includes(lowerCaseQuery)
+        return get().allCharacters.filter((character) =>
+            character.name.toLowerCase().includes(lowerCaseQuery),
         );
-    }
+    },
 }));
