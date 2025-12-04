@@ -7,12 +7,23 @@ export const Characters = () => {
   const getPage = useCharacterStore((state) => state.getPage);
   const currentPage = useCharacterStore((state) => state.currentPage);
   const totalPages = useCharacterStore((state) => state.totalPages);
+  const searchCharacter = useCharacterStore((state) => state.searchCharacter);
 
   useEffect(() => {
     if (characters.length === 0) {
       getPage(1);
     }
   }, [characters, getPage]);
+
+  const handlePrev = () => {
+    if (searchCharacter) return;
+    if (currentPage > 1) getPage(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (searchCharacter) return;
+    if (totalPages !== 0 && currentPage < totalPages) getPage(currentPage + 1);
+  };
 
   return (
     <div className="max-w-7xl mx-auto mt-10">
@@ -32,18 +43,18 @@ export const Characters = () => {
       <div className="flex items-center justify-center gap-4 mt-8">
         <button
           className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
-          disabled={currentPage <= 1}
-          onClick={() => getPage(currentPage - 1)}
+          disabled={searchCharacter ? true : currentPage <= 1}
+          onClick={handlePrev}
         >
           Prev
         </button>
         <span>
-          Página {currentPage} de {totalPages || "..."}
+          Página {currentPage} de {totalPages ?? "..."}
         </span>
         <button
           className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
-          disabled={totalPages !== 0 && currentPage >= totalPages}
-          onClick={() => getPage(currentPage + 1)}
+          disabled={searchCharacter ? true : (totalPages !== 0 && currentPage >= totalPages)}
+          onClick={handleNext}
         >
           Next
         </button>
