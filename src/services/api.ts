@@ -46,3 +46,15 @@ export const getCharacterByName = (
 		controller,
 	};
 };
+
+export const getCharacterByNameAndPage = (
+	name: string,
+	page: number,
+): UseApiCall<RickAndMortyApiResponse> => {
+	const controller = loadAbort();
+
+	return {
+		call: axios.get(`${API_URL}?name=${name}&page=${page}` , { signal: controller.signal }),
+		controller,
+	};
+};
