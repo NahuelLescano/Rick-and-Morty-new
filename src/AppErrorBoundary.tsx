@@ -1,5 +1,6 @@
 import type { ReactNode, ComponentType } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
+import { CommonButton } from "./Globals/CommonButton/CommonButton";
 
 interface ErrorBoundaryProps {
 	children: ReactNode;
@@ -32,12 +33,12 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 					</pre>
 				</details>
 			)}
-			<button
+			<CommonButton
 				onClick={resetErrorBoundary}
-				className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+				className="px-4 py-2 rounded hover:bg-blue-600"
 			>
 				Try Again
-			</button>
+			</CommonButton>
 		</div>
 	);
 };
