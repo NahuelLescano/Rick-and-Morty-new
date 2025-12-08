@@ -27,9 +27,11 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
 	allCharacters: [],
 	currentPage: 1,
 	totalPages: 0,
-	loading: true,
+	loading: false,
   searchCharacter: null,
 	setAllCharacters: async () => {
+    set(() => ({ loading: true }));
+
 		const { call } = getCharacters();
 		const { data } = await call;
 
@@ -57,6 +59,8 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
 		return get().allCharacters.find((character) => character.id === id);
 	},
 	getPage: async (page: number) => {
+    set(() => ({ loading: true }));
+
 		const name = get().searchCharacter;
 		if (name && name.trim().length > 0) {
 			const { call } = getCharacterByNameAndPage(name, page);
