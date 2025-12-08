@@ -2,12 +2,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Suspense } from "react";
 import { RoutesNotFound } from "@/RoutesNotFound";
 import { Characters, CharacterDetail } from "@/characters";
-import { About, Loading } from "@/Globals";
+import { About, Loading, NavBar } from "@/Globals";
 
 export const AppRouter = () => {
 	return (
 		<Suspense fallback={<Loading />}>
 			<BrowserRouter>
+        <NavBar />
 				<RoutesNotFound>
 					<Route path="/" element={<Characters />} />
 					<Route path="/about" element={<About />} />
