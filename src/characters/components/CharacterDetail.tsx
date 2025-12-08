@@ -9,7 +9,7 @@ export const CharacterDetail = () => {
 	const navigate = useNavigate();
 
 	const fetchById = useCharacterStore((state) => state.fetchCharacterById);
-	const character = useCharacterStore((state) =>
+	const characterById = useCharacterStore((state) =>
 		state.selectCharacterById(Number(id)),
 	);
 
@@ -19,7 +19,7 @@ export const CharacterDetail = () => {
 		}
 	}, [id, fetchById]);
 
-	if (!character) {
+	if (!characterById) {
 		return <Loading />;
 	}
 
@@ -28,8 +28,8 @@ export const CharacterDetail = () => {
 			<div className="max-w-4xl mt-12 mx-auto bg-transparent backdrop-blur-md rounded-lg shadow-lg p-6">
 				<div className="relative">
 					<img
-						src={character.image}
-						alt={`${character.name}'s image`}
+						src={characterById.image}
+						alt={`${characterById.name}'s image`}
 						className="size-96 object-fill rounded-lg mb-4"
 					/>
 					<CommonButton
@@ -43,24 +43,24 @@ export const CharacterDetail = () => {
 					</CommonButton>
 				</div>
 				<footer className="flex flex-col items-center justify-center text-center">
-					<h3 className="text-3xl font-bold mb-4">{character.name}</h3>
+					<h3 className="text-3xl font-bold mb-4">{characterById.name}</h3>
 					<p className="text-lg mb-2">
-						<strong>Status:</strong> {character.status}
+						<strong>Status:</strong> {characterById.status}
 					</p>
 					<p className="text-lg mb-2">
-						<strong>Species:</strong> {character.species}
+						<strong>Species:</strong> {characterById.species}
 					</p>
 					<p className="text-lg mb-2">
-						<strong>Type:</strong> {character.type}
+						<strong>Type:</strong> {characterById.type}
 					</p>
 					<p className="text-lg mb-2">
-						<strong>Gender:</strong> {character.gender}
+						<strong>Gender:</strong> {characterById.gender}
 					</p>
 					<p className="text-lg mb-2">
-						<strong>Origin:</strong> {character.origin.name}
+						<strong>Origin:</strong> {characterById.origin.name}
 					</p>
 					<p className="text-lg mb-2">
-						<strong>Location:</strong> {character.location.name}
+						<strong>Location:</strong> {characterById.location.name}
 					</p>
 				</footer>
 			</div>
