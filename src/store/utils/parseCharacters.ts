@@ -1,5 +1,10 @@
 import type { RickAndMortyApiResponse, Character } from "@/types";
 
+/**
+ * Parses the character data from the Rick and Morty API response.
+ * @param {RickAndMortyApiResponse} data - The API response containing character data.
+ * @returns {Character[]} An array of parsed Character objects.
+ */
 export const parsedCharacters = (
   data: RickAndMortyApiResponse,
 ): Character[] => {
