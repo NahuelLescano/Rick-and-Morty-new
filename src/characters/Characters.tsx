@@ -9,6 +9,14 @@ export const Characters = () => {
     return <Loading />;
   }
 
+  if (!loading && characters.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto mt-10 text-center">
+        <p className="text-white text-lg">No se encontraron personajes.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto mt-10">
       <header className="mt-22 z-3 gap-4">
