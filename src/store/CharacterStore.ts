@@ -7,6 +7,7 @@ import {
   getCharacterByName,
   getCharacterByNameAndPage,
   getCharactersByFilter,
+  getCharactersByNameAndFilter,
 } from "@/services";
 import { parsedCharacters } from "./utils";
 
@@ -16,17 +17,26 @@ interface CharacterStore {
   loading: boolean;
   searchCharacter: string | null;
   allCharacters: Character[];
-  filters: { status?: string; gender?: string };
+  filters: { status?: string; species?: string; gender?: string };
   setAllCharacters: () => Promise<void>;
   fetchCharacterById: (id: number) => Promise<void>;
   selectCharacterById: (id: number) => Character | undefined;
   getPage: (page: number) => Promise<void>;
   findCharacterByName: (name: string) => Promise<void>;
   clearSearch: () => void;
-  setFilters: (partial: { status?: string; gender?: string }) => Promise<void>;
+  setFilters: (partial: {
+    status?: string;
+    species?: string;
+    gender?: string;
+  }) => Promise<void>;
   clearFilters: () => Promise<void>;
 }
 
+/**
+ * Store for managing character data, pagination, search, and filters.
+ * Provides methods to fetch and manipulate character data from the API.
+ * @returns {CharacterStore} The character store instance.
+ */
 export const useCharacterStore = create<CharacterStore>((set, get) => ({
   allCharacters: [],
   currentPage: 1,
@@ -69,25 +79,73 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
     set(() => ({ loading: true }));
 
     const name = get().searchCharacter;
-    const { status, gender } = get().filters ?? {};
-    if (name && name.trim().length > 0) {
-      const { call } = getCharacterByNameAndPage(name, page);
-      const { data } = await call;
-      const parsedData = parsedCharacters(data);
-      set(() => ({
-        allCharacters: parsedData,
-        currentPage: page,
-        totalPages: data.info.pages,
-        searchCharacter: name,
-        loading: false,
-      }));
-      return;
-    }
+    const { status, species, gender } = get().filters ?? {};
 
-    // If filters are set, use filtered query
-    if ((status && status.trim().length > 0) || (gender && gender.trim().length > 0)) {
-      const { call } = getCharactersByFilter({ status, gender, page });
+    try {
+      // If name and filters are active, combine both
+      if (
+        name &&
+        name.trim().length > 0 &&
+        ((status && status.trim().length > 0) ||
+          (species && species.trim().length > 0) ||
+          (gender && gender.trim().length > 0))
+      ) {
+        const { call } = getCharactersByNameAndFilter({
+          name,
+          status,
+          species,
+          gender,
+          page,
+        });
+        const { data } = await call;
+        const parsedData = parsedCharacters(data);
+        set(() => ({
+          allCharacters: parsedData,
+          currentPage: page,
+          totalPages: data.info.pages,
+          searchCharacter: name,
+          loading: false,
+        }));
+        return;
+      }
+
+      // If only name is active
+      if (name && name.trim().length > 0) {
+        const { call } = getCharacterByNameAndPage(name, page);
+        const { data } = await call;
+        const parsedData = parsedCharacters(data);
+        set(() => ({
+          allCharacters: parsedData,
+          currentPage: page,
+          totalPages: data.info.pages,
+          searchCharacter: name,
+          loading: false,
+        }));
+        return;
+      }
+
+      // If only filters are active
+      if (
+        (status && status.trim().length > 0) ||
+        (species && species.trim().length > 0) ||
+        (gender && gender.trim().length > 0)
+      ) {
+        const { call } = getCharactersByFilter({ status, species, gender, page });
+        const { data } = await call;
+        const parsedData = parsedCharacters(data);
+        set(() => ({
+          allCharacters: parsedData,
+          currentPage: page,
+          totalPages: data.info.pages,
+          searchCharacter: null,
+          loading: false,
+        }));
+        return;
+      }
+
+      const { call } = getCharactersByPage(page);
       const { data } = await call;
+
       const parsedData = parsedCharacters(data);
       set(() => ({
         allCharacters: parsedData,
@@ -96,35 +154,69 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
         searchCharacter: null,
         loading: false,
       }));
-      return;
+    } catch (error: any) {
+      const is404 = error?.response?.status === 404;
+      set(() => ({
+        allCharacters: [],
+        currentPage: page,
+        totalPages: is404 ? 0 : get().totalPages,
+        loading: false,
+      }));
     }
-
-    const { call } = getCharactersByPage(page);
-    const { data } = await call;
-
-    const parsedData = parsedCharacters(data);
-    set(() => ({
-      allCharacters: parsedData,
-      currentPage: page,
-      totalPages: data.info.pages,
-      searchCharacter: null,
-      loading: false,
-    }));
   },
   findCharacterByName: async (name: string) => {
     set(() => ({ loading: true }));
 
-    const { call } = getCharacterByName(name);
-    const { data } = await call;
+    const { status, species, gender } = get().filters ?? {};
 
-    const parsedData = parsedCharacters(data);
-    set(() => ({
-      allCharacters: parsedData,
-      currentPage: 1,
-      totalPages: data.info.pages,
-      searchCharacter: name,
-      loading: false,
-    }));
+    try {
+      // If filters are active, combine with name
+      if (
+        (status && status.trim().length > 0) ||
+        (species && species.trim().length > 0) ||
+        (gender && gender.trim().length > 0)
+      ) {
+        const { call } = getCharactersByNameAndFilter({
+          name,
+          status,
+          species,
+          gender,
+          page: 1,
+        });
+        const { data } = await call;
+        const parsedData = parsedCharacters(data);
+        set(() => ({
+          allCharacters: parsedData,
+          currentPage: 1,
+          totalPages: data.info.pages,
+          searchCharacter: name,
+          loading: false,
+        }));
+        return;
+      }
+
+      // No filters, search by name only
+      const { call } = getCharacterByName(name);
+      const { data } = await call;
+
+      const parsedData = parsedCharacters(data);
+      set(() => ({
+        allCharacters: parsedData,
+        currentPage: 1,
+        totalPages: data.info.pages,
+        searchCharacter: name,
+        loading: false,
+      }));
+    } catch (error: any) {
+      const is404 = error?.response?.status === 404;
+      set(() => ({
+        allCharacters: [],
+        currentPage: 1,
+        totalPages: is404 ? 0 : get().totalPages,
+        searchCharacter: name,
+        loading: false,
+      }));
+    }
   },
   clearSearch: () => {
     set(() => ({ searchCharacter: null, loading: false }));
