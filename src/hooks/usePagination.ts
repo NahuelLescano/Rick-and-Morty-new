@@ -31,10 +31,12 @@ export const usePagination = (): ResultPagination => {
   const loading = useCharacterStore((state) => state.loading);
 
   useEffect(() => {
-    if (characters.length === 0) {
+    // Only trigger initial fetch when app starts
+    // Avoid refetch loops when filters/name return zero results
+    if (characters.length === 0 && currentPage === 1 && totalPages === 0) {
       getPage(1);
     }
-  }, [characters, getPage]);
+  }, [characters, currentPage, totalPages, getPage]);
 
   const handlePrev = () => {
     if (currentPage > 1) getPage(currentPage - 1);
