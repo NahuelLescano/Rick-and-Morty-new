@@ -18,10 +18,7 @@ export const Characters = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mt-10">
-      <header className="mt-22 z-3 gap-4">
-        <Pagination />
-      </header>
+    <div className="max-w-7xl mx-auto mt-12">
       <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 z-2 text-lg">
         {characters.map((char) => (
           <CharacterItem
