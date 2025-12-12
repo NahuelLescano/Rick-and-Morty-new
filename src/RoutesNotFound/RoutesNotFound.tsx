@@ -12,4 +12,4 @@ export const RoutesNotFound = ({ children }: { children: ReactNode }) => {
             } />
         </Routes>
     );
-}
+};

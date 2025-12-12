@@ -130,7 +130,12 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
         (species && species.trim().length > 0) ||
         (gender && gender.trim().length > 0)
       ) {
-        const { call } = getCharactersByFilter({ status, species, gender, page });
+        const { call } = getCharactersByFilter({
+          status,
+          species,
+          gender,
+          page,
+        });
         const { data } = await call;
         const parsedData = parsedCharacters(data);
         set(() => ({
