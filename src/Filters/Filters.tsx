@@ -1,5 +1,5 @@
 import { useCharacterStore } from "@/store";
-import { CommonButton } from "../CommonButton";
+import { CommonButton } from "@/Globals";
 import type { ChangeEvent } from "react";
 
 export const Filters = () => {

@@ -1,6 +1,7 @@
 import { CharacterItem } from "./components";
-import { Pagination, Loading } from "@/Globals";
+import { Loading } from "@/Globals";
 import { usePagination } from "@/hooks";
+import { Pagination } from "@/Pagination";
 
 export const Characters = () => {
   const { characters, loading } = usePagination();

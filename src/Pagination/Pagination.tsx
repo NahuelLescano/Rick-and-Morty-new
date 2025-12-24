@@ -1,4 +1,4 @@
-import { CommonButton } from "../CommonButton";
+import { CommonButton } from "@/Globals";
 import { usePagination } from "@/hooks";
 
 export const Pagination = () => {

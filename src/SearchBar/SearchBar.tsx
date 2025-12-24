@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { CommonButton } from "../CommonButton";
+import { CommonButton } from "@/Globals";
 import { useCharacterStore } from "@/store";
 
 export const SearchBar = () => {

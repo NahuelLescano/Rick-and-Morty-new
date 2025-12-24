@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Footer } from "@/Globals";
+import { Footer } from "@/Footer";
 import "./App.css";
 
 export const App = ({ children }: { children: ReactNode }) => {
