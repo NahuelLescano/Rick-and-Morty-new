@@ -31,8 +31,6 @@ export const usePagination = (): ResultPagination => {
   const loading = useCharacterStore((state) => state.loading);
 
   useEffect(() => {
-    // Only trigger initial fetch when app starts
-    // Avoid refetch loops when filters/name return zero results
     if (characters.length === 0 && currentPage === 1 && totalPages === 0) {
       getPage(1);
     }
