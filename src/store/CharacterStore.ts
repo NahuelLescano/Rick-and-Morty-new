@@ -69,6 +69,7 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
         allCharacters: exists
           ? state.allCharacters
           : [...state.allCharacters, data],
+        loading: false,
       };
     });
   },
@@ -234,20 +235,5 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   clearFilters: async () => {
     set(() => ({ filters: {} }));
     await get().getPage(1);
-  },
-  findCharacterByFilter: async (status?: string, species?: string) => {
-    set(() => ({ loading: true }));
-
-    const { call } = getCharactersByFilter({ status, species });
-    const { data } = await call;
-
-    const parsedData = parsedCharacters(data);
-    set(() => ({
-      allCharacters: parsedData,
-      currentPage: 1,
-      totalPages: data.info.pages,
-      searchCharacter: null,
-      loading: false,
-    }));
   },
 }));
