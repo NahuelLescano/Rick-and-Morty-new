@@ -10,7 +10,7 @@ export const About = () => {
                 <img
                     src={profile}
                     alt="Rick and Morty Web Profile"
-                    className="mx-auto rounded-full size-32 md:size-48 object-cover mb-6 shadow-lg border-4 border-green-500"
+                    className="mx-auto rounded-full size-32 md:size-48 object-cover mb-6 shadow-lg"
                 />
                 <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                     Explora el multiverso de Rick y Morty a través de esta aplicación interactiva 
