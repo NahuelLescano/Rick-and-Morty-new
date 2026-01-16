@@ -54,9 +54,11 @@ export const CharacterDetail = () => {
           <p className="text-lg mb-2">
             <strong>Species:</strong> {characterById.species}
           </p>
-          <p className="text-lg mb-2">
-            <strong>Type:</strong> {characterById.type}
-          </p>
+          {characterById.type ?? (
+            <p className="text-lg mb-2">
+              <strong>Type:</strong> {characterById.type}
+            </p>
+          )}
           <p className="text-lg mb-2">
             <strong>Gender:</strong> {characterById.gender}
           </p>
