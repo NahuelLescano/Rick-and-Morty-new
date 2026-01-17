@@ -1,12 +1,12 @@
 import type { RickAndMortyApiResponse, Character } from "@/types";
 
-// "https://rickandmortyapi.com/api/episode/13", <- original format
-// "13",  <- desired format
-const parseEpisode = (episode: string[]): string => {
-  return episode.map((ep) => {
-    const parts = ep.split("/");
-    return parts[parts.length - 1];
-  }).join(", ");
+const parsedEpisode = (episodes: string[]): string => {
+  return episodes
+    .map((episode) => {
+      const parts = episode.split("/");
+      return parts[parts.length - 1];
+    })
+    .join(", ");
 };
 
 /**
@@ -24,16 +24,10 @@ export const parsedCharacters = (
     species: char.species,
     type: char.type,
     gender: char.gender,
-    origin: {
-      name: char.origin.name,
-      url: char.origin.url,
-    },
-    location: {
-      name: char.location.name,
-      url: char.location.url,
-    },
+    origin: char.origin.name,
+    location: char.location.name,
     image: char.image,
-    episode: parseEpisode(char.episode),
+    episode: parsedEpisode(char.episode),
   }));
 
   return parsedCharacters;
