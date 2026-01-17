@@ -13,6 +13,7 @@ export interface Character {
   origin: Location;
   location: Location;
   image: string;
+  episode: string;
 }
 
 export interface Info {
