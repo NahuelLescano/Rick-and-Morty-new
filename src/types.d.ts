@@ -3,17 +3,28 @@ export interface Location {
   url: string;
 }
 
-export interface Character {
+interface BaseCharacter {
   id: number;
   name: string;
   status: string;
   species: string;
-  type: string;
+  type?: string;
   gender: string;
+  image: string;
+}
+
+export interface ApiCharacter extends BaseCharacter {
+  url: string;
+  episode: string[];
+  created: string;
   origin: Location;
   location: Location;
-  image: string;
+}
+
+export interface Character extends BaseCharacter {
   episode: string;
+  origin: string
+  location: string
 }
 
 export interface Info {
@@ -25,5 +36,5 @@ export interface Info {
 
 export interface RickAndMortyApiResponse {
   info: Info;
-  results: Character[];
+  results: ApiCharacter[];
 }
