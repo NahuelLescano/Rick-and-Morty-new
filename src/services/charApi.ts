@@ -51,22 +51,6 @@ export const getCharactersByPage = (
 };
 
 /**
- * Fetches characters by name from the Rick and Morty API.
- * @param {string} name - The name of the character to search for.
- * @returns {UseApiCall<RickAndMortyApiResponse>} An object containing the API call promise and the abort controller.
- */
-export const getCharacterByName = (
-  name: string,
-): UseApiCall<RickAndMortyApiResponse> => {
-  const controller = loadAbort();
-
-  return {
-    call: axios.get(`${API_URL}?name=${name}`, { signal: controller.signal }),
-    controller,
-  };
-};
-
-/**
  * Fetches characters by name and page number from the Rick and Morty API.
  * @param {string} name - The name of the character to search for.
  * @param {number} page - The page number to fetch.
