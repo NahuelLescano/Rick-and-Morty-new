@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 import type { Character } from "@/types.d";
 import { Links } from "@/Globals";
 
@@ -8,6 +11,12 @@ export const CharacterItem = ({
   species,
   image,
 }: Pick<Character, "id" | "name" | "status" | "species" | "image">) => {
+  const [fav, setIsFav] = useState(false);
+
+  const handleFav = () => {
+    setIsFav(!fav);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "alive":
@@ -22,6 +31,23 @@ export const CharacterItem = ({
   return (
     <div className="mt-8 bg-transparent backdrop-blur-md rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-700">
       <div className="relative">
+        <section className="z-3 absolute top-3 left-3">
+          {fav ? (
+            <button
+              className="text-red-500 text-xl cursor-pointer hover:scale-105 hover:text-red-300 transition-all"
+              onClick={handleFav}
+            >
+              <FaHeart />
+            </button>
+          ) : (
+            <button
+              className="text-black text-xl cursor-pointer hover:scale-105 transition-all"
+              onClick={handleFav}
+            >
+              <CiHeart />
+            </button>
+          )}
+        </section>
         <Links to={`/detail/${id}`}>
           <img
             src={image}
